@@ -7,7 +7,7 @@ import { askVertex } from './vertexClient';
 const app = express();
 app.use(express.json());
 
-const publicPath = path.join(__dirname, 'public');
+const publicPath = path.join(__dirname, '..', 'public');
 const hasPublic = fs.existsSync(publicPath);
 if (hasPublic) {
   app.use(express.static(publicPath));
