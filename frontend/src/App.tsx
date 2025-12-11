@@ -1,10 +1,20 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
+
+type User = { id: string; name: string; email: string } | null
 
 function App() {
   const [question, setQuestion] = useState('')
   const [answer, setAnswer] = useState('')
   const [loading, setLoading] = useState(false)
+  const [user, setUser] = useState<User>(null)
+
+  useEffect(() => {
+    fetch('/api/auth/me')
+      .then(res => res.json())
+      .then(data => setUser(data.user))
+      .catch(() => {})
+  }, [])
 
   const handleAsk = async () => {
     setLoading(true)
@@ -25,6 +35,16 @@ function App() {
 
   return (
     <div className="container">
+      <div className="auth-bar">
+        {user ? (
+          <>
+            <span>{user.name}</span>
+            <a href="/api/auth/logout">Выйти</a>
+          </>
+        ) : (
+          <a href="/api/auth/google">Войти через Google</a>
+        )}
+      </div>
       <input
         type="text"
         value={question}
