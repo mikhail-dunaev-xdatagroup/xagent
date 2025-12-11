@@ -30,9 +30,11 @@ app.post('/ask', async (req, res) => {
 });
 
 if (hasPublic) {
-  app.get('/{*path}', (req, res) => {
+  const sendIndex = (_req: express.Request, res: express.Response) => {
     res.sendFile(path.join(publicPath, 'index.html'));
-  });
+  };
+  app.get('/', sendIndex);
+  app.get('/{*path}', sendIndex);
 }
 
 const port = process.env.PORT || 8080;
