@@ -1,0 +1,39 @@
+.container {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+input {
+  padding: 14px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #444;
+  background: #1a1a1a;
+  color: inherit;
+}
+
+input::placeholder {
+  color: #888;
+}
+
+button {
+  padding: 14px;
+  font-size: 16px;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.answer {
+  padding: 20px;
+  background: #333;
+  border-radius: 8px;
+  white-space: pre-wrap;
+  line-height: 1.6;
+}

@@ -1,9 +1,17 @@
 import 'dotenv/config';
 import express from 'express';
+import path from 'path';
+import fs from 'fs';
 import { askVertex } from './vertexClient';
 
 const app = express();
 app.use(express.json());
+
+const publicPath = path.join(__dirname, 'public');
+const hasPublic = fs.existsSync(publicPath);
+if (hasPublic) {
+  app.use(express.static(publicPath));
+}
 
 app.post('/ask', async (req, res) => {
   try {
@@ -21,9 +29,13 @@ app.post('/ask', async (req, res) => {
   }
 });
 
+if (hasPublic) {
+  app.get('/{*path}', (req, res) => {
+    res.sendFile(path.join(publicPath, 'index.html'));
+  });
+}
+
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
   console.log('Server listening on port', port);
 });
-
-console.log("GOOGLE_APPLICATION_CREDENTIALS =", process.env.GOOGLE_APPLICATION_CREDENTIALS);
