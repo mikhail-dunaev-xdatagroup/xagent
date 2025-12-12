@@ -10,7 +10,7 @@ function App() {
   const [user, setUser] = useState<User>(null)
 
   useEffect(() => {
-    fetch('/api/auth/me')
+    fetch('/api/auth/me', { credentials: 'include' })
       .then(res => res.json())
       .then(data => setUser(data.user))
       .catch(() => {})
@@ -23,7 +23,8 @@ function App() {
       const res = await fetch('/ask', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ question })
+        body: JSON.stringify({ question }),
+        credentials: 'include'
       })
       const data = await res.json()
       setAnswer(data.answer || data.error)
